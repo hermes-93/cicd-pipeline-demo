@@ -1,0 +1,22 @@
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+    image: cicd-pipeline-demo:local
+    container_name: cicd-demo-app
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: development
+      LOG_LEVEL: DEBUG
+      SERVICE_VERSION: local
+    # Restart unless explicitly stopped (e.g. docker compose down)
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

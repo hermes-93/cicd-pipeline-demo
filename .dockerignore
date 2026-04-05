@@ -1,0 +1,6 @@
+# Exclude everything, then whitelist what Docker actually needs.
+# This keeps the build context small and avoids leaking secrets.
+**
+
+!app/
+!requirements.txt
