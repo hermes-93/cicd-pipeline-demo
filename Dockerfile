@@ -3,7 +3,7 @@
 # Install dependencies into a virtual environment so only the venv gets copied
 # to the final image, keeping it lean and free of build tools.
 # =============================================================================
-FROM python:3.12-slim AS builder
+FROM python:3.14-slim AS builder
 
 WORKDIR /build
 
@@ -18,7 +18,7 @@ RUN python -m venv /opt/venv && \
 # Stage 2 — runtime
 # Minimal image: no pip, no build tools, just the app and its venv.
 # =============================================================================
-FROM python:3.12-slim AS runtime
+FROM python:3.14-slim AS runtime
 
 # Run as non-root for security
 RUN addgroup --system app && adduser --system --ingroup app app
