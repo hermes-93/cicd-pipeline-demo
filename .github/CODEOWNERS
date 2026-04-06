@@ -1,0 +1,8 @@
+# Global owners — review required for all changes
+* @hermes-93
+
+# CI/CD workflows
+.github/workflows/ @hermes-93
+
+# Security configuration
+.github/dependabot.yml @hermes-93
