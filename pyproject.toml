@@ -9,3 +9,8 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP"]
 ignore = ["E501"]
+
+[tool.bandit]
+targets = ["app"]
+skips = []
+exclude_dirs = ["tests"]
