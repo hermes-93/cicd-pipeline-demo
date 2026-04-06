@@ -1,6 +1,7 @@
 """Health check endpoints used by load balancers and Kubernetes probes."""
 
 import time
+
 from fastapi import APIRouter
 from pydantic import BaseModel
 

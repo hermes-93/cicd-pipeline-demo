@@ -2,10 +2,10 @@
 
 import pytest
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _create_item(client, name="Widget", price=9.99, description="A test widget"):
     return client.post("/items/", json={"name": name, "price": price, "description": description})
@@ -14,6 +14,7 @@ def _create_item(client, name="Widget", price=9.99, description="A test widget")
 # ---------------------------------------------------------------------------
 # List
 # ---------------------------------------------------------------------------
+
 
 def test_list_items_empty(client):
     response = client.get("/items/")
@@ -31,6 +32,7 @@ def test_list_items_returns_created(client):
 # ---------------------------------------------------------------------------
 # Create
 # ---------------------------------------------------------------------------
+
 
 def test_create_item_returns_201(client):
     response = _create_item(client)
@@ -51,13 +53,16 @@ def test_create_item_auto_increments_id(client):
     assert second["id"] == first["id"] + 1
 
 
-@pytest.mark.parametrize("bad_payload", [
-    {"name": "", "price": 5.0},          # empty name
-    {"name": "x", "price": -1.0},        # negative price
-    {"name": "x", "price": 0},           # zero price
-    {"price": 5.0},                      # missing name
-    {"name": "x"},                       # missing price
-])
+@pytest.mark.parametrize(
+    "bad_payload",
+    [
+        {"name": "", "price": 5.0},  # empty name
+        {"name": "x", "price": -1.0},  # negative price
+        {"name": "x", "price": 0},  # zero price
+        {"price": 5.0},  # missing name
+        {"name": "x"},  # missing price
+    ],
+)
 def test_create_item_validates_input(client, bad_payload):
     response = client.post("/items/", json=bad_payload)
     assert response.status_code == 422
@@ -66,6 +71,7 @@ def test_create_item_validates_input(client, bad_payload):
 # ---------------------------------------------------------------------------
 # Get
 # ---------------------------------------------------------------------------
+
 
 def test_get_item_returns_200(client):
     item_id = _create_item(client).json()["id"]
@@ -87,6 +93,7 @@ def test_get_item_returns_correct_data(client):
 # ---------------------------------------------------------------------------
 # Update
 # ---------------------------------------------------------------------------
+
 
 def test_update_item_name(client):
     item_id = _create_item(client).json()["id"]
@@ -116,6 +123,7 @@ def test_update_item_not_found(client):
 # ---------------------------------------------------------------------------
 # Delete
 # ---------------------------------------------------------------------------
+
 
 def test_delete_item_returns_204(client):
     item_id = _create_item(client).json()["id"]
